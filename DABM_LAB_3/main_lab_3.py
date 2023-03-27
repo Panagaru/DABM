@@ -12,7 +12,7 @@ def menu():
     print("\tEste programa te ayuda a crear un archivo csv con los valores entregados por un sensor de luminosidad, con los que se controlará el brillo de un LED o la velocidad de un ventilador.")
     sen = Sensor([])
 
-    # Ingresar valor mínimo y máximo
+    # Ingresar valor mínimo y máximo del rango
     print("\nIngresa el valor mínimo del sensor (0-5.0):")
     min=float(input())
     print("\nIngresa el valor máximo del sensor (0-5.0):")
