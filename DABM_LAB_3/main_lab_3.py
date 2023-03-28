@@ -27,7 +27,7 @@ def menu():
         value = arduino.readline().decode().strip() # Valor del sensor
         valor = int((255*float(value)/5)) # Valor del brillo que le doy al led
         valor_led=sen.conversion(valor,min,max) # Valor del brillo que le doy al led de acuerdo al mínimo y máximo valor ingresados
-        valor_led=255-valor_led # entre mayor luminosidad, menos ilumina el led
+        valor_led=255-valor_led # Entre mayor luminosidad, menos ilumina el led
         arduino.write(struct.pack(">B", int(valor_led)))
         print("valor sensor (V):", value)
         # print("valor led (0-255):", valor_led)
