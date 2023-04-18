@@ -37,11 +37,10 @@ class MainWindow(QMainWindow):
         self.checkbox_hipertension = QCheckBox("Hipertensión", self)
         self.checkbox_hipertension.setGeometry(250,320,100,20)   
 
-def load_stylesheet():
+def load_stylesheet2():
     return """
         QWidget {
             background-color: Thistle;
-            box-shadow: 5px 5px 5px #FFFFFF;
         }
         QLabel{
             font-size: 14px;
@@ -61,14 +60,3 @@ def load_stylesheet():
             font-size: 14px;
         }
     """
-
-# if __name__=='__main__':
-#     app = QApplication(sys.argv)
-
-#     stylesheet = load_stylesheet()
-#     app.setStyleSheet(stylesheet)
-
-#     main_window = MainWindow()
-#     main_window.show()
-
-#     sys.exit(app.exec())

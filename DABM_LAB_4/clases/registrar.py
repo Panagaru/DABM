@@ -4,26 +4,24 @@ import os
 import pandas as pd
 from PyQt6.QtWidgets import QApplication,QWidget,QVBoxLayout,QHBoxLayout,QLabel,QLineEdit,QPushButton
 
-class LoginWindow(QWidget):
-    def __init__(self, ingresar, registrar):
+class RegisterWindow(QWidget):
+    def __init__(self):
         super().__init__()
-        self.ingresar = ingresar
-        self.registrar = registrar
         self.init_ui()
 
     def init_ui(self):
-        self.setWindowTitle('Ingreso al sistema DABM')
+        self.setWindowTitle('Regristro al sistema DABM')
         self.setGeometry(100,100,300,200)
 
         layout = QVBoxLayout()
 
-        label_username = QLabel('Usuario:')
+        label_username = QLabel('Ingresa nuevo usuario (que no contenga caracteres especiales o ñ):')
         layout.addWidget(label_username)
 
         self.edit_username = QLineEdit()
         layout.addWidget(self.edit_username)
 
-        label_password = QLabel('Contraseña:')
+        label_password = QLabel('Ingresa contraseña:')
         layout.addWidget(label_password)
 
         self.edit_password = QLineEdit()
@@ -31,47 +29,49 @@ class LoginWindow(QWidget):
 
         layout.addWidget(self.edit_password)
 
-        btn_ingresar = QPushButton('Ingresar')
-        btn_ingresar.clicked.connect(self.auth)
-        layout.addWidget(btn_ingresar)
+        btn_crear = QPushButton('Crear')
+        btn_crear.clicked.connect(self.crear)
+        layout.addWidget(btn_crear)
 
-        btn_registrar = QPushButton('Registrar')
-        btn_registrar.clicked.connect(self.regis)
-        layout.addWidget(btn_registrar)
+        btn_ingresar = QPushButton('Ingresar')
+        btn_ingresar.clicked.connect(self.ingresa)
+        layout.addWidget(btn_ingresar)
 
         self.setLayout(layout)
 
-    def auth(self):
-        username = self.edit_username.text()
-        password = self.edit_password.text()
-
-        if self.validate_credentials(username, password):
-            self.ingresar.show()
-            self.close()
-        else:
-            x = 0
-
-    def validate_credentials(self,username,password):
-        self.user = "hola"
-        self.pas = "contra"
+    def crear(self):
+        self.user = self.edit_username.text()
+        self.pas = self.edit_password.text()
+        self.nuevo = [self.user, self.pas]
+        self.new = []
+        self.new.append(self.nuevo)
+        x = 0
+                    
         cwd = os.getcwd()
         archivo = cwd + "/DABM_LAB_4/archivos/usuarios.csv"
         with open(archivo,"r") as file:
             reader = csv.reader(file, delimiter = ',')
             header = next(reader)
             for row in reader:
-                if row[0] == username:
-                    self.user = row[0]
-                    self.pas = row[1]
-        return(username == self.user and password == self.pas)
+                if row[0] == self.user:
+                    x = 1
+        if x == 1:
+            print("Este nombre de usuario ya existe, por favor ingresa otro (que no contenga caracteres especiales o ñ)")
+        elif x == 0:
+            cwd = os.getcwd()
+            archivo = cwd + "/DABM_LAB_4/archivos/usuarios.csv"
+            with open(archivo, "a", newline="") as file:
+                writer = csv.writer(file,delimiter=',')
+                writer.writerows(self.new)
+            print("Usuario creado")
 
-    def regis(self):
-        self.registrar.show()
+    def ingresa(self):
+        print("Para ingresar cierra la ventana de regristro.")
 
-def load_stylesheet():
+def load_stylesheet3():
     return """
         QWidget {
-            background-color: Lavender;
+            background-color: AntiqueWhite;
         }
         QLabel{
             font-size: 14px;
@@ -80,7 +80,6 @@ def load_stylesheet():
         QLineEdit{
             background-color: LightBlue;
             border: 1px solid Black;
-            border-radius: 10;
             padding: 3px;
             font-size: 14px;
         }
@@ -88,24 +87,11 @@ def load_stylesheet():
             background-color: LightCyan;
             color: Black;
             border: 1px solid SeaGreen;
-            border-radius: 10;
             padding: 5px;
             font-size: 14px;
         }
         QPushButton:hover{
             background-color: SeaGreen;
             border: 1px solid LightCyan;
-            border-radius: 10;
         }
     """
-
-# if __name__=='__main__':
-#     app = QApplication(sys.argv)
-
-#     stylesheet = load_stylesheet()
-#     app.setStyleSheet(stylesheet)
-
-#     login_window = LoginWindow()
-#     login_window.show()
-
-#     sys.exit(app.exec())
