@@ -5,10 +5,11 @@ import pandas as pd
 from PyQt6.QtWidgets import QApplication,QWidget,QVBoxLayout,QHBoxLayout,QLabel,QLineEdit,QPushButton
 
 class LoginWindow(QWidget):
-    def __init__(self, ingresar, registrar):
+    def __init__(self, ingresar, registrar, ventana4):
         super().__init__()
         self.ingresar = ingresar
         self.registrar = registrar
+        self.ventana4 = ventana4
         self.init_ui()
 
     def init_ui(self):
@@ -49,7 +50,7 @@ class LoginWindow(QWidget):
             self.ingresar.show()
             self.close()
         else:
-            x = 0
+            self.ventana4.show()
 
     def validate_credentials(self,username,password):
         self.user = "hola"

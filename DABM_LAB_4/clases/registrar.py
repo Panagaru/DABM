@@ -5,8 +5,11 @@ import pandas as pd
 from PyQt6.QtWidgets import QApplication,QWidget,QVBoxLayout,QHBoxLayout,QLabel,QLineEdit,QPushButton
 
 class RegisterWindow(QWidget):
-    def __init__(self):
+    def __init__(self, ventana, ventana2, ventana3):
         super().__init__()
+        self.ventana = ventana
+        self.ventana2 = ventana2
+        self.ventana3 = ventana3
         self.init_ui()
 
     def init_ui(self):
@@ -56,17 +59,17 @@ class RegisterWindow(QWidget):
                 if row[0] == self.user:
                     x = 1
         if x == 1:
-            print("Este nombre de usuario ya existe, por favor ingresa otro (que no contenga caracteres especiales o ñ)")
+            self.ventana.show()
         elif x == 0:
             cwd = os.getcwd()
             archivo = cwd + "/DABM_LAB_4/archivos/usuarios.csv"
             with open(archivo, "a", newline="") as file:
                 writer = csv.writer(file,delimiter=',')
                 writer.writerows(self.new)
-            print("Usuario creado")
+            self.ventana3.show()
 
     def ingresa(self):
-        print("Para ingresar cierra la ventana de regristro.")
+        self.ventana2.show()
 
 def load_stylesheet3():
     return """

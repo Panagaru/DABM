@@ -1,41 +1,68 @@
 import sys 
 from PyQt6.QtWidgets import *
 from PyQt6.QtGui import QPixmap
+import serial
+import struct
+import time
+import csv
+import os
 
-class MainWindow(QMainWindow):
+arduino = serial.Serial("COM14",9600)
+
+class MainWindow(QWidget):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("Elementos de una interfaz")
-        self.setGeometry(100,100,500,500)
+        self.init_ui()
 
-        # Insertar una imagen
-        self.label_image = QLabel(self)
-        self.label_image.setGeometry(50,50,225,225) # valor 1: inicio en x, valor 2: inicio en y, valor 3: ancho en x, valor 4: ancho en y
-        pixmap = QPixmap("DABM_LAB_4/archivos/logo.png")
-        self.label_image.setPixmap(pixmap)
+    def init_ui(self):
+        self.setWindowTitle('Controlar el brillo de un LED')
+        self.setGeometry(100,100,300,200)
 
-        # Crear un menú de selección (ComboBox)
-        self.label_combo = QLabel("Día de la semana", self)
-        self.label_combo.setGeometry(50,280,110,20)
-        self.combo_dias = QComboBox(self)
-        self.combo_dias.setGeometry(50,310,100,25)
-        self.combo_dias.addItems(["Lunes","Martes","Miércoles","Jueves","Viernes","Sábado","Domingo"])
+        layout = QVBoxLayout()
 
-        # Crear grupo de botones de opción de género
-        self.label_radio = QLabel("Género:", self)
-        self.label_radio.setGeometry(50,340,100,20)
-        self.radio_masculino = QRadioButton("Masculino", self)
-        self.radio_masculino.setGeometry(50,360,100,20)
-        self.radio_femenino = QRadioButton("Femenino", self)
-        self.radio_femenino.setGeometry(50,380,100,20)   
+        label_minimo = QLabel('Valor mínimo del sensor (0-5.0):')
+        layout.addWidget(label_minimo)
 
-        # Crear casillas de verificación para las opciones de salud
-        self.label_checkbox = QLabel("Salud:", self)
-        self.label_checkbox.setGeometry(250,280,100,20)
-        self.checkbox_diabetes = QCheckBox("Diabetes", self)
-        self.checkbox_diabetes.setGeometry(250,300,100,20)
-        self.checkbox_hipertension = QCheckBox("Hipertensión", self)
-        self.checkbox_hipertension.setGeometry(250,320,100,20)   
+        self.edit_minimo = QLineEdit()
+        layout.addWidget(self.edit_minimo)
+        self.min = self.edit_minimo.text()
+
+        label_maximo = QLabel('Valor máximo del sensor (0-5.0):')
+        layout.addWidget(label_maximo)
+
+        self.edit_maximo = QLineEdit()
+        layout.addWidget(self.edit_maximo)
+        self.max = self.edit_maximo.text()
+
+        btn_calcular = QPushButton('Calcular')
+        btn_calcular.clicked.connect(self.led)
+        layout.addWidget(btn_calcular)
+
+        self.setLayout(layout)
+
+    def conversion(self, valor):
+        self.valor = valor
+        max = self.edit_maximo.text()
+        min = self.edit_minimo.text()
+        self.minimo = int((255*float(min)/5))
+        self.maximo = int((255*float(max)/5))
+        if self.valor <= self.minimo:
+            val = 0
+        elif self.valor >= self.maximo:
+            val = 255
+        elif ((self.valor > self.minimo)&(self.valor < self.maximo)):
+            val = (0 + ((int(self.valor) - self.minimo)*(255-0)/(self.maximo - self.minimo)))
+        return(val)
+
+    def led(self):
+        while True:
+            value = arduino.readline().decode().strip() # Valor del sensor
+            valor = int((255*float(value)/5)) # Valor del brillo que le doy al led
+            valor_led=self.conversion(valor) # Valor del brillo que le doy al led de acuerdo al mínimo y máximo valor ingresados
+            valor_led=255-valor_led # Entre mayor luminosidad, menos ilumina el led
+            arduino.write(struct.pack(">B", int(valor_led)))
+            print("valor sensor (V):", value)
+            time.sleep(0.05)
 
 def load_stylesheet2():
     return """
@@ -60,3 +87,14 @@ def load_stylesheet2():
             font-size: 14px;
         }
     """
+
+# if __name__=='__main__':
+#     app = QApplication(sys.argv)
+
+#     stylesheet = load_stylesheet2()
+#     app.setStyleSheet(stylesheet)
+
+#     main_window = MainWindow()
+#     main_window.show()
+
+#     sys.exit(app.exec())
