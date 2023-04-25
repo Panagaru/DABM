@@ -1,0 +1,29 @@
+
+body {
+    /*background-color: aquamarine;*/
+    background-image: url("https://escuelaing.s3.amazonaws.com/production/images/Edificio-I-y-H-de-la-Escuela.2e16d0ba.fill-1200x800-c100.jpg?AWSAccessKeyId=AKIAWFY3NGTFD5OU3IGB&Signature=dawHyDDO5UvoWd4NB9kimZH3Uus%3D&Expires=1684179955");
+    font-family: 'Courier New', Courier, monospace;
+}
+#cajalogin{
+    /*comentar en css*/
+    background-color: white;
+    width: 300px;
+    position: absolute;
+    top: 40%;
+    left: 30%;
+    padding: 20px;
+    border-style: solid;
+    border-color: black;
+    box-shadow: 5px 5px 5px black;
+    text-align: center;
+}
+#btnIngreso{
+    /*comentar en css*/
+    background-color: green;
+}
+.textos{
+    color:blue;
+}
+#validacion{
+    color:red;
+}
