@@ -1,0 +1,9 @@
+
+body {
+    background-image: url("https://s3-us-west-2.amazonaws.com/utsw-patientcare-web-production/original_images/Epilepsy_Constellation_1600.jpg");
+    font-family: 'Courier New', Courier, monospace;
+}
+#formregis{
+    /*comentar en css*/
+    font-family:'Garamond';
+}

@@ -1,0 +1,43 @@
+
+body {
+    background-image: url("https://s3-us-west-2.amazonaws.com/utsw-patientcare-web-production/original_images/Epilepsy_Constellation_1600.jpg");
+}
+#cajalogin{
+    /*comentar en css*/
+    background-color: rgb(221, 212, 220);
+    width: 380px;
+    position: absolute;
+    top: 20%;
+    left: 10%;
+    padding: 15px;
+    border-style: inset;
+    border-color: rgb(194, 171, 224);
+    text-align: center;
+    font-size: 25px;
+    font-family:'Garamond';
+    font-style: italic;
+}
+#userlogin{
+    text-align: justify;
+    font-size: 20px;
+    font-style: normal;
+}
+#btnIngreso{
+    /*comentar en css*/
+    background-color: rgb(194, 171, 224);
+    border-radius: 5px;
+    font-size: 18px;
+    font-family:'Garamond';
+}
+#btnRegistro{
+    background-color: rgb(194, 171, 224);
+    border-radius: 5px;
+    font-size: 18px;
+    font-family:'Garamond';
+}
+.textos{
+    color:black;
+}
+#validacion{
+    color:red;
+}

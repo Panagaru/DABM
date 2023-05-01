@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ingreso a ConvulX</title>
+    <link rel="stylesheet" href="{{ url_for ('static', filename='estilos.css') }}">
+    <script>
+        function login(){
+            usuario=document.getElementById('usuario').value
+            password=document.getElementById('password').value
+            if (usuario != "" && password != ""){
+                document.getElementById('formlogin').submit();
+            }
+            else{
+                document.getElementById("validacion").innerHTML="Ingresar todos los campos";
+            }
+        }
+    </script>
+
+</head>
+<body>
+    <form action="/login" method="POST" id="formlogin">
+    <div id="cajalogin">
+        <p><h4>Bienvenido a ConvulX</h4></p>
+        <div id="userlogin">
+            <p class="textos">Usuario: <input type="text" id="usuario" name="usuario"></p>
+            <p class="textos">Contraseña: <input type="password" id="password" name="password"></p>
+        </div>
+        <p><input type="button" value="Ingresar" id='btnIngreso' onclick="login()">
+            <input type="button" value="Registrar" id='btnRegistro' onclick="window.open('/registro')">
+        </p>
+        <p id="validacion"></p>
+    </div>
+    </form>
+</body>
+</html>
