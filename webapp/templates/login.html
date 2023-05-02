@@ -15,7 +15,8 @@
             //alert(password);
             if (usuario != "" && password != ""){
                 //alert("Campos llenos");
-                document.getElementById("validacion").innerHTML="Campos llenos";
+                //document.getElementById("validacion").innerHTML="Campos llenos";
+                document.getElementById('formlogin').submit();
             }
             else{
                 //alert("Ingresar todos los campos")
@@ -26,15 +27,19 @@
 
 </head>
 <body>
+    <form action="/login" method="POST" id="formlogin">
     <div id="cajalogin">
         <p><h4>Bienvenido al sistema</h4></p>
         <p class="textos">Usuario: <input type="text" id="usuario" name="usuario"></p>
-        <p>Contraseña: <input type="password" id="password" name="password"></p>
-        <div id="botoningreso">
-            <p><input type="button" value="Ingresar" id='btnIngreso' onclick="login()"></p>
-        </div>
-        <p><input type="button" value="Ingresar_v" id='btnIngreso' onclick="window.open('registro')"></p>
+        <p class="textos">Contraseña: <input type="password" id="password" name="password"></p>
+        <!-- <div id="botoningreso"> -->
+            <!-- <p><input type="button" value="Ingresar" id='btnIngreso' onclick="login()"></p>
+        </div> -->
+        <p><input type="button" value="Ingresar" id='btnIngreso' onclick="login()">
+            <input type="button" value="Registrar" id='btnRegistro' onclick="window.open('/registro')">
+        </p>
         <p id="validacion"></p>
     </div>
+    </form>
 </body>
 </html>
