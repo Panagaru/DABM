@@ -26,6 +26,10 @@ def crear():
 
         return render_template('login.html')
 
+@app.route('/menu')
+def menu():
+    return render_template('menu.html')
+
 @app.route('/login', methods=['POST'])
 def login():
     if request.method == "POST":
@@ -48,6 +52,26 @@ def login():
                 return render_template('menu.html', usuario=usuario)
         if encontrado ==  False:
             return("Datos invalidos")
+
+@app.route('/frecuencia')
+def frecuencia():
+    return render_template('frecuencia.html')
+
+@app.route('/dormir')
+def dormir():
+    return render_template('dormir.html')
+
+@app.route('/medicamentos')
+def medicamentos():
+    return render_template('medicamentos.html')
+
+@app.route('/informacion')
+def informacion():
+    return render_template('informacion.html')
+
+@app.route('/que')
+def que():
+    return render_template('que.html')
 
 if __name__=="__main__":
     app.run(debug=True)
