@@ -38,9 +38,12 @@
           </div> 
           <div id="monitoreo" class="container tab-pane fade"><br> 
             <h3>MONITOR</h3> 
+            <button type="button" class="btn btn-success" onclick="window.open('/monitor')">Ver</button>
           </div> 
           <div id="graficas" class="container tab-pane fade"><br> 
-            <h3>GRÁFICA</h3> 
+            <h3>GRÁFICA</h3>
+            <!-- <img src="data:image/png;base64,{{ grafica }}" /> -->
+            <img src="{{ url_for('static', filename='grafica.png')}}">
           </div> 
         </div> 
     </div>
