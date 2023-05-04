@@ -66,28 +66,52 @@ def monitor():
         if temp >= int(parametros[i][1]) and temp <= int(parametros[i][2]):
             condicion = str(parametros[i][0])
 
-    
+    directorio = os.path.dirname(__file__)
+    archivo = 'static/temperaturas.csv'
+    ruta = os.path.join(directorio,archivo)
+
+    with open(ruta,'a') as f:
+        f.write(str(temp)+"\n")
 
     # Comparar
 
     return (render_template('monitor.html', parametros=parametros, temp=temp, condicion=condicion))
 
 def crearGrafica():
-    days = ["Lunes", "Mrates", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"]
-    pacientes = [12, 20, 15, 18, 25, 1, 8]
+    # days = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"]
+    # pacientes = [12, 20, 15, 18, 25, 1, 8]
 
+    # fig,ax = plt.subplots()
+    # ax.bar(days, pacientes)
+    # ax.set_title("Número de pacientes atendidos en una semana")
+    # ax.set_xlabel("Días de la semana")
+    # ax.set_ylabel("Número de pacientes")
+
+    directorio_d = os.path.dirname(__file__)
+    archivo_d = 'static/temperaturas.csv'
+    ruta_d = os.path.join(directorio_d,archivo_d)
+
+    with open(ruta_d,'r') as d:
+        temps = d.readlines()
+
+    num = []
+    for i in range(0,len(temps)):
+        num.append(i)
+    
     fig,ax = plt.subplots()
-    ax.bar(days, pacientes)
-    ax.set_title("Número de pacientes atendidos en una semana")
-    ax.set_xlabel("Días de la semana")
-    ax.set_ylabel("Número de pacientes")
+    ax.bar(num, temps)
+    ax.set_title("Temperaturas tomadas")
+    ax.set_xlabel("Cantidad de tomas")
+    ax.set_ylabel("Temperatura")
 
+    # Método para graficar #1
     directorio = os.path.dirname(__file__)
     archivo = 'static/grafica.png'
     ruta = os.path.join(directorio,archivo)
 
     plt.savefig(ruta)
 
+    # Método para graficar #2
     # buf = io.BytesIO()
     # plt.savefig(buf,format='png')
     # buf.seek(0)
