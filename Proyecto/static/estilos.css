@@ -1,25 +1,26 @@
 
 body {
-    background-image: url("https://s3-us-west-2.amazonaws.com/utsw-patientcare-web-production/original_images/Epilepsy_Constellation_1600.jpg");
+    /* background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-KCRH5RQDOgXvm6DDiJycoOOBEOCdbirSieY2slyH23V2hzqh_ZT5kbM6J_AKqVSLiHk&usqp=CAU"); */
+    background-image: url("cerebro.jpg")
 }
 #cajalogin{
     /*comentar en css*/
     background-color: rgb(221, 212, 220);
-    width: 380px;
+    width: 200px;
     position: absolute;
     top: 20%;
-    left: 10%;
-    padding: 15px;
+    left: 0%;
+    padding: 45px;
     border-style: inset;
     border-color: rgb(194, 171, 224);
     text-align: center;
-    font-size: 25px;
+    font-size: 20px;
     font-family:'Garamond';
     font-style: italic;
 }
 #userlogin{
     text-align: justify;
-    font-size: 20px;
+    font-size: 15px;
     font-style: normal;
 }
 #btnIngreso{

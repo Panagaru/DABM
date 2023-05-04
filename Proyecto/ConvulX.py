@@ -73,5 +73,9 @@ def informacion():
 def que():
     return render_template('que.html')
 
+@app.route('/usuario')
+def usuario():
+    return render_template('usuario.html')
+
 if __name__=="__main__":
     app.run(debug=True)
