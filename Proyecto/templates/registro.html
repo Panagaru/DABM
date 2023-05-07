@@ -12,9 +12,32 @@
     <div class="container mt-3" id="formregis">
         <h2>REGISTRO DE USUARIOS</h2>
         <div class="card">
-            <div class=""card-header>DATOS</div>
+            <div class=""card-header>&nbsp;&nbsp;&nbsp;DATOS PERSONALES</div>
+            <p><i>&nbsp;&nbsp;&nbsp;&nbsp;Recuerde que estos datos personales son necesarios para el seguimiento de sus posibles ataques epilépticos.</i></p>
             <div class="card-body">
                 <form action="/crearUsuario" method="post">
+                    <div class="mb-3">
+                        <label for="nombre" class="form-label">Nombre:</label>
+                        <input type="text" class="form-control" id="nombre" placeholder="Ingrese nombre" name="nombre">
+                    </div>
+                    <div class="mb-3">
+                        <label for="apellido" class="form-label">Apellido:</label>
+                        <input type="text" class="form-control" id="apellido" placeholder="Ingrese apellido" name="apellido">
+                    </div>
+                    <div class="mb-3">
+                        <label for="rh" class="form-label">RH:</label>
+                        <input type="text" class="form-control" id="rh" placeholder="Ingrese RH" name="rh">
+                    </div>
+                    <div class="mb-3">
+                        <label for="eps" class="form-label">EPS:</label>
+                        <input type="text" class="form-control" id="eps" placeholder="Ingrese EPS" name="eps">
+                    </div>
+                    <div class="mb-3">
+                        <label for="direccion" class="form-label">Dirección:</label>
+                        <input type="text" class="form-control" id="direccion" placeholder="Ingrese dirección" name="direccion">
+                    </div>
+                    <br><br>
+                    <p><i>&nbsp;&nbsp;&nbsp;&nbsp;Datos con los que se registrará en la aplicación.</i></p>
                     <div class="mb-3 mt-3">
                         <label for="email" class="form-label">Usuario:</label>
                         <input type="text" class="form-control" id="usuario" placeholder="Ingrese usuario" name="usuario">
@@ -27,6 +50,8 @@
                 </form>
             </div>
             <div class="card-footer">ConvulX</div>
+                </form>
+            </div>
         </div>
     </div>    
 </body>

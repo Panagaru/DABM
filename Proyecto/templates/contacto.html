@@ -21,11 +21,6 @@
       margin: 5px;
     }
     </style>
-    <style>
-        table, th, td {
-          border: 1px solid black;
-        }
-    </style>
 </head>
 <body>
 <ul class="nav">
@@ -66,48 +61,20 @@
 </nav>
 
 <div class="container-fluid mt-3">
-    <p><br><b>Datos de usuario</b> 
-        <br><b>Nombre:</b> {{ nombre }} 
-        <br><b>Apellido:</b> {{ apellido }} 
-        <br><b>RH:</b> {{ rh }} 
-        <br><b>EPS:</b> {{ eps }} 
-        <br><b>Dirección:</b> {{ direccion }} 
-    </p>
-</div>
-
-<div>
-    <table>
-        <tr>
-          <th>Nombre</th>
-          <th>Apellido</th>
-          <th>Parentesco</th>
-          <th>Telefono</th>
-        </tr>
-        <tr>
-          <td>{{ conta }}</td>
-          <td>{{ contaap }}</td>
-          <td>{{ parentesco }}</td>
-          <td>{{ telefono }}</td>
-        </tr>
-    </table>
-</div>
-
-<div class="container-fluid mt-3">
-    <form action="/nuevo_contacto" method="post">
+    <form action="/action_page.php">
         <fieldset>
             <legend>Agregar contacto de emergencia:</legend>
-            <label for="conta" class="form-label">Nombre:</label>
-            <input type="text" class="form-control" id="conta" placeholder="Ingrese nombre" name="conta">
-            <label for="contaap" class="form-label">Apellido:</label>
-            <input type="text" class="form-control" id="contaap" placeholder="Ingrese apellido" name="contaap">
-            <label for="parentesco" class="form-label">Parentesco:</label>
-            <input type="text" class="form-control" id="parentesco" placeholder="Ingrese parentesco" name="parentesco">
-            <label for="telefono" class="form-label">Telefono:</label>
-            <input type="text" class="form-control" id="telefono" placeholder="Ingrese teléfono" name="telefono">
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <label for="fname">Nombre:</label>
+            <input type="text" id="fname" name="fname"><br><br>
+            <label for="lname">Apellido:</label>
+            <input type="text" id="lname" name="lname"><br><br>
+            <label for="lname">Parentesco:</label>
+            <input type="text" id="lname" name="lname"><br><br>
+            <label for="lname">teléfono:</label>
+            <input type="text" id="lname" name="lname"><br><br>
+            <input type="submit" value="Submit">
         </fieldset>
     </form>
 </div>
-
 </body>
 </html>
