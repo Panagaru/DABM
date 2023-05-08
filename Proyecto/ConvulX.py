@@ -33,8 +33,9 @@ def crear():
         archivo_c = 'static/contactos.csv'
         ruta_c = os.path.join(directorio_c,archivo_c)
 
-        with open(ruta_c,'a') as f:
-            f.write(usuario+";"+pwd+";"+""+";"+""+";"+""+";"+""+"\n")
+        for i in range(0,3):
+            with open(ruta_c,'a') as f:
+                f.write(usuario+";"+pwd+";"+" "+";"+" "+";"+" "+";"+" "+"\n")
 
         return (render_template('login.html'))
 
@@ -129,15 +130,110 @@ def usuario():
     with open(rutac, 'r') as f:
         datosc = f.readlines()
 
+    c = 0
+
     for usuarioc in datosc:
         datosUsuarioc = usuarioc.replace("\n","").split(";")
         if (usuario == datosUsuarioc[0] and password == datosUsuarioc[1]):
-            conta =  datosUsuarioc[2]
-            contaap =  datosUsuarioc[3]
-            parentesco = datosUsuarioc[4]
-            telefono =  datosUsuarioc[5]
+            c = c+1
+    
+    co = 0
+    if (c<=3):
+        for usuarioc in datosc:
+            datosUsuarioc = usuarioc.replace("\n","").split(";")
+            if (usuario == datosUsuarioc[0] and password == datosUsuarioc[1]):
+                co = co+1
+                if (co==1):
+                    conta =  datosUsuarioc[2]
+                    contaap =  datosUsuarioc[3]
+                    parentesco = datosUsuarioc[4]
+                    telefono =  datosUsuarioc[5]
+                if (co==2):
+                    conta2 =  datosUsuarioc[2]
+                    contaap2 =  datosUsuarioc[3]
+                    parentesco2 = datosUsuarioc[4]
+                    telefono2 =  datosUsuarioc[5]
+                if (co==3):
+                    conta3 =  datosUsuarioc[2]
+                    contaap3 =  datosUsuarioc[3]
+                    parentesco3 = datosUsuarioc[4]
+                    telefono3 =  datosUsuarioc[5]
+                    
+    co = 1
+    if (c>3):
+        for usuarioc in datosc:
+            datosUsuarioc = usuarioc.replace("\n","").split(";")
+            if (usuario == datosUsuarioc[0] and password == datosUsuarioc[1]):
+                # co = co+1
+                
+                if (c==4):
+                    if (" " != datosUsuarioc[2]):
+                        if (co==3):
+                            co = co+1
+                            conta =  datosUsuarioc[2]
+                            contaap =  datosUsuarioc[3]
+                            parentesco = datosUsuarioc[4]
+                            telefono =  datosUsuarioc[5]
+                    if (" " == datosUsuarioc[2]):
+                        if (co==1):
+                            co = co+1
+                            conta3 =  datosUsuarioc[2]
+                            contaap3 =  datosUsuarioc[3]
+                            parentesco3 = datosUsuarioc[4]
+                            telefono3 =  datosUsuarioc[5]
+                    if (" " == datosUsuarioc[2]):
+                        if (co==2):
+                            co = co+1
+                            conta2 =  datosUsuarioc[2]
+                            contaap2 =  datosUsuarioc[3]
+                            parentesco2 = datosUsuarioc[4]
+                            telefono2 =  datosUsuarioc[5]
+                            
+                            
+                if (c==5):
+                    if (" " != datosUsuarioc[2]):
+                        if (co==2):
+                            co = co+1
+                            conta =  datosUsuarioc[2]
+                            contaap =  datosUsuarioc[3]
+                            parentesco = datosUsuarioc[4]
+                            telefono =  datosUsuarioc[5]
+                    if (" " != datosUsuarioc[2]):
+                        if (co==3):
+                            co = co+1
+                            conta2 =  datosUsuarioc[2]
+                            contaap2 =  datosUsuarioc[3]
+                            parentesco2 = datosUsuarioc[4]
+                            telefono2 =  datosUsuarioc[5]
+                    if (" " == datosUsuarioc[2]):
+                        if (co==1):
+                            co = co+1
+                            conta3 =  datosUsuarioc[2]
+                            contaap3 =  datosUsuarioc[3]
+                            parentesco3 = datosUsuarioc[4]
+                            telefono3 =  datosUsuarioc[5]
+                        
+                   
+                if (c==6):   
+                    if (" " != datosUsuarioc[2]):
+                        if (co==1):
+                            conta =  datosUsuarioc[2]
+                            contaap =  datosUsuarioc[3]
+                            parentesco = datosUsuarioc[4]
+                            telefono =  datosUsuarioc[5]
+                        if (co==2):
+                            conta2 =  datosUsuarioc[2]
+                            contaap2 =  datosUsuarioc[3]
+                            parentesco2 = datosUsuarioc[4]
+                            telefono2 =  datosUsuarioc[5]
+                        if (co==3):
+                            conta3 =  datosUsuarioc[2]
+                            contaap3 =  datosUsuarioc[3]
+                            parentesco3 = datosUsuarioc[4]
+                            telefono3 =  datosUsuarioc[5]
+                        co = co+1
 
-    return render_template('usuario.html', nombre=nombre, apellido=apellido, rh=rh, eps=eps, direccion=direccion, conta=conta, contaap=contaap, parentesco=parentesco, telefono=telefono)
+    return render_template('usuario.html', nombre=nombre, apellido=apellido, rh=rh, eps=eps, direccion=direccion, conta=conta, contaap=contaap, parentesco=parentesco, telefono=telefono, conta2=conta2, contaap2=contaap2, parentesco2=parentesco2, telefono2=telefono2, conta3=conta3, contaap3=contaap3, parentesco3=parentesco3, telefono3=telefono3)
 
 @app.route('/nuevo_contacto', methods=['POST'])
 def contacto():
@@ -163,8 +259,14 @@ def contacto():
         archivo = 'static/contactos.csv'
         ruta = os.path.join(directorio,archivo)
 
-        with open(ruta,'a') as f:
-            f.write(usuario+";"+password+";"+conta+";"+contaap+";"+parentesco+";"+telefono+"\n")
+        # with open(ruta, 'r') as f:
+        #     datosd = f.readlines()
+        #     for usuariod in datosd:
+        #         datosUsuario = usuariod.replace("\n","").split(";")
+        #         if (usuario == datosUsuario[0] and password == datosUsuario[1]):
+        #             if (""== datosUsuario[2]):
+        with open(ruta,'a') as d:
+            d.write(usuario+";"+password+";"+conta+";"+contaap+";"+parentesco+";"+telefono+"\n")
 
         return (render_template('usuario.html'))
 
