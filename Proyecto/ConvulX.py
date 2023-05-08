@@ -192,14 +192,14 @@ def usuario():
                             
                 if (c==5):
                     if (" " != datosUsuarioc[2]):
-                        if (co==2):
+                        if (co==3):
                             co = co+1
                             conta =  datosUsuarioc[2]
                             contaap =  datosUsuarioc[3]
                             parentesco = datosUsuarioc[4]
                             telefono =  datosUsuarioc[5]
                     if (" " != datosUsuarioc[2]):
-                        if (co==3):
+                        if (co==2):
                             co = co+1
                             conta2 =  datosUsuarioc[2]
                             contaap2 =  datosUsuarioc[3]
