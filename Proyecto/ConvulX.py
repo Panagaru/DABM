@@ -160,7 +160,7 @@ def usuario():
                     telefono3 =  datosUsuarioc[5]
                     
     co = 1
-    if (c>3):
+    if (c>3 and c<=6):
         for usuarioc in datosc:
             datosUsuarioc = usuarioc.replace("\n","").split(";")
             if (usuario == datosUsuarioc[0] and password == datosUsuarioc[1]):
@@ -269,6 +269,51 @@ def contacto():
             d.write(usuario+";"+password+";"+conta+";"+contaap+";"+parentesco+";"+telefono+"\n")
 
         return (render_template('usuario.html'))
+
+@app.route('/nueva_alarma', methods=['POST'])
+def alarma():
+    if request.method == "POST":
+        lunes = request.form['lunes']
+        martes = request.form['martes']
+        miercoles = request.form['miercoles']
+        jueves = request.form['jueves']
+        viernes = request.form['viernes']
+        sabado = request.form['sabado']
+        domingo = request.form['domingo']
+        name = request.form['nameInput']
+        nombre_a = request.form['nom']
+
+        directorio = os.path.dirname(__file__)
+        archivo = 'static/medicamentos.csv'
+        ruta = os.path.join(directorio,archivo)
+
+        with open(ruta, 'a') as f:
+            f.write(nombre_a+";"+name+";"+lunes+";"+martes+";"+miercoles+";"+jueves+";"+viernes+";"+sabado+";"+domingo+"\n")
+            # f.write(nombre_a+"\n")
+        return (render_template('medicamentos.html', lunes=lunes, nombre_a=nombre_a))
+
+@app.route('/ciclo_sueño', methods=['POST'])
+def sueño():
+    if request.method == "POST":
+        dia = request.form['dia']
+        hourInput = request.form['hourInput']
+        minuteInput = request.form['minuteInput']
+
+        hora = int(hourInput)*60
+        total = int(hora) + int(minuteInput)
+
+        porcen = int(total)*100/1440
+        vari = "--bar-value:"+str(int(porcen))+";"
+        vari = str(vari)
+
+        directorio = os.path.dirname(__file__)
+        archivo = 'static/sueños.csv'
+        ruta = os.path.join(directorio,archivo)
+
+        with open(ruta, 'a') as f:
+            f.write(dia+";"+hourInput+";"+minuteInput+";"+vari+"\n")
+
+    return (render_template('dormir.html', vari=vari))
 
 if __name__=="__main__":
     app.run(debug=True)

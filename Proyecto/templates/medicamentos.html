@@ -6,6 +6,56 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+  <style> 
+    body { 
+      font-family: Arial, sans-serif; 
+    } 
+ 
+    .container { 
+      text-align: center; 
+      margin-top: 50px; 
+    } 
+ 
+    h1 { 
+      color: #333; 
+    } 
+ 
+    .alarm-input { 
+      padding: 10px; 
+      font-size: 16px; 
+      border: 1px solid #ccc; 
+      border-radius: 4px; 
+      margin: 10px; 
+    } 
+ 
+    .alarm-button { 
+      background-color: #4CAF50; 
+      color: white; 
+      border: none; 
+      padding: 10px 20px; 
+      text-align: center; 
+      text-decoration: none; 
+      display: inline-block; 
+      font-size: 16px; 
+      border-radius: 4px; 
+      cursor: pointer; 
+    } 
+ 
+    .stop-button { 
+      background-color: #f44336; 
+      display: none; 
+    } 
+ 
+    .stop-button.show { 
+      display: inline-block; 
+    } 
+ 
+    .alarm-name { 
+      margin-top: 10px; 
+      font-size: 14px; 
+      color: #666; 
+    } 
+  </style>
 </head>
 <body>
 <ul class="nav">
@@ -45,10 +95,153 @@
   </div>
 </nav>
 
+<div class="container-fluid mt-3"> 
+  <form action="/nueva_alarma" method="post">
+    <h3>Alarma de medicamentos</h3> 
+    <p>En este espacio puedes realizar un control de la toma de medicamentos mediante la creación de alarmas para cada uno de ellos.</p>
+    <h4>Nueva alarma</h4> 
+
+    <label for="nameInput" class="form-label">Nombre de la alarma</label>
+    <input type="text" class="form-control" id="nameInput" placeholder="Nombre de la alarma" name="nameInput"> 
+    <label for="nom" class="form-label">Nom:</label>
+    <input type="text" class="form-control" id="nom" placeholder="Ingrese nom" name="nom">
+    <br> 
+    <input class="alarm-input" type="number" min="0" max="23" placeholder="HH" id="hourInput"> 
+    <span>:</span> 
+    <input class="alarm-input" type="number" min="0" max="59" placeholder="MM" id="minuteInput"> 
+    <br> 
+    <h5>¿Cada cuánto tiempo se debe repetir esta alarma?</h5>
+    <input class="alarm-input" type="number" min="0" max="23" placeholder="HH" id="hour_Input"> 
+    <span>:</span> 
+    <input class="alarm-input" type="number" min="0" max="59" placeholder="MM" id="minute_Input">
+    <br>
+      <h5>¿Qué días se debe repetir esta alarma?</h5>
+      <!-- <div class="form-check"> 
+        <input class="form-check-input" type="checkbox" id="lunes" name="lunes" value="lunes" checked>
+        <label class="form-check-label">Lunes</label>
+        <label><input type="checkbox" value="lunes" id="lunes" name="dias"> Lunes</label> 
+      </div> 
+      <div class="form-check"> 
+        <input class="form-check-input" type="checkbox" id="martes" name="martes" value="martes" checked>
+        <label class="form-check-label">Martes</label>
+      </div> 
+      <div class="form-check"> 
+        <input class="form-check-input" type="checkbox" id="miercoles" name="miercoles" value="miercoles" checked>
+        <label class="form-check-label">Miercoles</label>
+      </div> 
+      <div class="form-check"> 
+        <input class="form-check-input" type="checkbox" id="jueves" name="jueves" value="jueves" checked>
+        <label class="form-check-label">Jueves</label>
+      </div> 
+      <div class="form-check"> 
+        <input class="form-check-input" type="checkbox" id="viernes" name="viernes" value="viernes" checked>
+        <label class="form-check-label">Viernes</label>
+      </div> 
+      <div class="form-check"> 
+        <input class="form-check-input" type="checkbox" id="sabado" name="sabado" value="sabado" checked>
+        <label class="form-check-label">Sabado</label>
+      </div> 
+      <div class="form-check"> 
+        <input class="form-check-input" type="checkbox" id="domingo" name="domingo" value="domingo" checked>
+        <label class="form-check-label">Domingo</label>
+      </div>  -->
+
+      <input type="checkbox" name="lunes" value="lunes"> lunes<br> 
+ 
+      <input type="checkbox" name="martes" value="martes"> martes<br> 
+   
+      <input type="checkbox" name="miercoles" value="miercoles"> miercoles<br> 
+
+      <input type="checkbox" name="jueves" value="jueves"> jueves<br>
+
+      <input type="checkbox" name="viernes" value="viernes"> viernes<br>
+
+      <input type="checkbox" name="sabado" value="sabado"> sabado<br>
+
+      <input type="checkbox" name="domingo" value="domingo"> domingo<br>
+
+      <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+    <br>
+    <button class="alarm-button" onclick="setAlarm()">Establecer alarma</button> 
+    <button class="alarm-button stop-button" onclick="stopAlarm()">Detener alarma</button> 
+    <div id="alarmName" class="alarm-name"></div>
+  <!-- </form> -->
+</div> 
+
 <div class="container-fluid mt-3">
-  <h3>Medicamentos</h3>
-  <p>¡Aquí se mostrará el control de medicamentos!</p>
+  <table>
+    <tr>
+      <th>Nombre</th>
+      <th>Día</th>
+    </tr>
+    <tr>
+      <td>{{ nombre_a }}</td>
+      <td>{{ lunes }}</td>
+    </tr>
+    <tr>
+  </table>
 </div>
+   
+  <audio id="alarmSound" src="Proyecto\static\WayV V Love Talk MV.mp3" loop></audio> 
+   
+  <script> 
+    var alarmSound = document.getElementById("alarmSound"); 
+    var stopButton = document.querySelector(".stop-button"); 
+    var alarmName = document.getElementById("alarmName"); 
+   
+    function setAlarm() { 
+      var nameInput = document.getElementById("nameInput"); 
+      var hourInput = document.getElementById("hourInput"); 
+      var minuteInput = document.getElementById("minuteInput"); 
+   
+      var name = nameInput.value; 
+      var hours = parseInt(hourInput.value); 
+      var minutes = parseInt(minuteInput.value); 
+   
+      var now = new Date(); 
+      var alarm = new Date(); 
+      alarm.setHours(hours); 
+      alarm.setMinutes(minutes); 
+      alarm.setSeconds(0); 
+   
+      var timeDiff = alarm - now; 
+      if (timeDiff <= 0 || isNaN(timeDiff)) { 
+        alert("Hora de alarma no válida"); 
+        return; 
+      } 
+   
+      setTimeout(function() { 
+        startAlarm(name); 
+      }, timeDiff);
+   
+      nameInput.value = ""; 
+      hourInput.value = ""; 
+      minuteInput.value = ""; 
+   
+      alarmName.innerText = "Alarma '" + name + "' establecida a las " + formatTime(hours) + ":" + formatTime(minutes); 
+    } 
+   
+    function startAlarm(name) { 
+      alarmSound.play(); 
+      stopButton.classList.add("show"); 
+      alarmName.innerText = "Alarma '" + name
+      "' sonando"; 
+    } 
+ 
+    function stopAlarm() { 
+    alarmSound.pause(); 
+    alarmSound.currentTime = 0; 
+    stopButton.classList.remove("show"); 
+    alarmName.innerText = ""; 
+    } 
+    
+    function formatTime(time) { 
+    return (time < 10) ? "0" + time : time; 
+    } 
+ 
+  </script>
 
 </body>
 </html>
+
