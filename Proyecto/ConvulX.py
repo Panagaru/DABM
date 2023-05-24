@@ -1,5 +1,13 @@
 from flask import Flask, render_template, request
 import os
+import serial
+import struct
+import time
+import csv
+import matplotlib.pyplot as plt
+import io
+import base64
+# arduino = serial.Serial("COM14",9600)
 
 app = Flask(__name__)
 
@@ -61,6 +69,8 @@ def login():
             datosUsuario = usuarioF.replace("\n","").split(";")
             if (usuario == datosUsuario[5] and password == datosUsuario[6]):
                 encontrado = True
+
+                crearGrafica()
 
                 directorio = os.path.dirname(__file__)
                 archivo = 'static/verificar.csv'
@@ -258,13 +268,7 @@ def contacto():
         directorio = os.path.dirname(__file__)
         archivo = 'static/contactos.csv'
         ruta = os.path.join(directorio,archivo)
-
-        # with open(ruta, 'r') as f:
-        #     datosd = f.readlines()
-        #     for usuariod in datosd:
-        #         datosUsuario = usuariod.replace("\n","").split(";")
-        #         if (usuario == datosUsuario[0] and password == datosUsuario[1]):
-        #             if (""== datosUsuario[2]):
+        
         with open(ruta,'a') as d:
             d.write(usuario+";"+password+";"+conta+";"+contaap+";"+parentesco+";"+telefono+"\n")
 
@@ -294,26 +298,90 @@ def alarma():
 
 @app.route('/ciclo_sueño', methods=['POST'])
 def sueño():
+
     if request.method == "POST":
         dia = request.form['dia']
         hourInput = request.form['hourInput']
         minuteInput = request.form['minuteInput']
 
-        hora = int(hourInput)*60
-        total = int(hora) + int(minuteInput)
+        hora = float(hourInput)*60
+        total = float(hora) + float(minuteInput)
+        total2 = float(total/60)
 
-        porcen = int(total)*100/1440
-        vari = "--bar-value:"+str(int(porcen))+";"
-        vari = str(vari)
+        porcen = float(total)*100/1440
+
+        directorio_v = os.path.dirname(__file__)
+        archivo_v = 'static/verificar.csv'
+        ruta_v = os.path.join(directorio_v,archivo_v)
+
+        with open(ruta_v, 'r') as f:
+            datos = f.readlines()
+            for usuariov in datos:
+                datosUsuariov = usuariov.replace("\n","").split(";")
+                usuario = datosUsuariov[0]
+                password = datosUsuariov[1]
 
         directorio = os.path.dirname(__file__)
         archivo = 'static/sueños.csv'
         ruta = os.path.join(directorio,archivo)
 
-        with open(ruta, 'a') as f:
-            f.write(dia+";"+hourInput+";"+minuteInput+";"+vari+"\n")
+        with open(ruta,'a') as d:
+            d.write(usuario+";"+password+";"+str(total2)+";"+dia+"\n")
+        
+        crearGrafica()
+    return (render_template('dormir.html'))
 
-    return (render_template('dormir.html', vari=vari))
+def crearGrafica():
+    num = []
+    por = []
+    directorio_v = os.path.dirname(__file__)
+    archivo_v = 'static/verificar.csv'
+    ruta_v = os.path.join(directorio_v,archivo_v)
+
+    with open(ruta_v, 'r') as f:
+        datos = f.readlines()
+        for usuariov in datos:
+            datosUsuariov = usuariov.replace("\n","").split(";")
+            usuario = datosUsuariov[0]
+            password = datosUsuariov[1]
+
+    directorio_d = os.path.dirname(__file__)
+    archivo_d = 'static/sueños.csv'
+    ruta_d = os.path.join(directorio_d,archivo_d)
+
+    with open(ruta_d,'r') as d:
+        datos2 = d.readlines()
+        for usuario2 in datos2:
+            datosUsuario2 = usuario2.replace("\n","").split(";")
+            if (usuario == datosUsuario2[0] and password == datosUsuario2[1]):
+                por.append(float(datosUsuario2[2]))
+                num.append(datosUsuario2[3])
+
+    fig,ax = plt.subplots()
+    ax.bar(num, por)
+    ax.set_title("Horas dormidas")
+    ax.set_xlabel("Día de la semana")
+    ax.set_ylabel("Cantidad de horas")
+
+    # Método para graficar #1
+    directorio = os.path.dirname(__file__)
+    archivo = 'static/grafica.png'
+    ruta = os.path.join(directorio,archivo)
+
+    plt.savefig(ruta)
+
+
+# @app.route('/calcular_freq', methods=['POST'])
+# def calcular():
+#     datos = []
+
+#     while True:
+#         value = arduino.readline().decode().strip() # Valor del sensor
+#         datos.append(value)
+#         time.sleep(0.1)
+
+#     return (render_template('frecuencia.html', datos=datos))
+
 
 if __name__=="__main__":
     app.run(debug=True)
