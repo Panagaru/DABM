@@ -335,7 +335,7 @@ def alarma():
     with open(ruta, 'a') as f: 
         f.write(usuario + ";" + password + ";" + name + ";" + hora_i + ";" + minu_i + ";" + hora_r + ";" + minu_r + ";" + ";".join(dias_seleccionados) + "\n") 
  
-    return render_template('medicamentos.html', dias_seleccionados=dias_seleccionados, name=name)
+    return render_template('medicamentos.html', name=name, hora_i=hora_i, minu_i=minu_i, hora_r=hora_r, minu_r=minu_r, dias_seleccionados=dias_seleccionados)
 
 
 @app.route('/ciclo_sueño', methods=['POST'])
@@ -417,11 +417,48 @@ def crearGrafica():
 #     datos = []
 #     conta = []
 
+#     directorio = os.path.dirname(__file__)
+#     archivo = 'static/freq.csv'
+#     ruta = os.path.join(directorio,archivo)
+
+#     with open(ruta,'w') as d:
+#         d.write("0"+"\n")
+
 #     while True:
 #         value = arduino.readline().decode().strip() # Valor del sensor
 #         datos.append(value)
 #         time.sleep(0.1)
-#         return (render_template('frecuencia.html', datos=datos))
+#         with open(ruta,'a') as d:
+#             d.write(value+"\n")
+#         # return (render_template('frecuencia.html', datos=datos))
+#         crear2Grafica()
+#     return (render_template('frecuencia.html'))
+
+# def crear2Grafica():
+#     num = []
+#     por = []
+#     directorio_d = os.path.dirname(__file__)
+#     archivo_d = 'static/freq.csv'
+#     ruta_d = os.path.join(directorio_d,archivo_d)
+
+#     with open(ruta_d,'r') as d:
+#         datos2 = d.readlines()
+#         for usuario2 in datos2:
+#             datosUsuario2 = usuario2.replace("\n","")
+#             por.append(float(datosUsuario2[0]))
+#             num.append(float(usuario2))
+
+#     fig,ax = plt.subplots()
+#     ax.bar(num, por)
+#     ax.set_title("Frecuencia cardíaca")
+#     ax.set_xlabel("Tiempo")
+#     ax.set_ylabel("Frecuencia")
+
+#     directorio = os.path.dirname(__file__)
+#     archivo = 'static/freq.png'
+#     ruta = os.path.join(directorio,archivo)
+
+#     plt.savefig(ruta)
 
 @app.route('/cerrar_sesion', methods=['POST'])
 def cerrar():

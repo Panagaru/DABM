@@ -17,22 +17,55 @@
                 document.getElementById("validacion").innerHTML="Ingresar todos los campos";
             }
         }
+
+            function abrirFormulario() {
+                window.location.href = "/registro";
+        }
+        
     </script>
 
 </head>
 <body>
-    <form action="/login" method="POST" id="formlogin">
-    <div id="cajalogin">
-        <p><h4>Bienvenido a ConvulX</h4></p>
-        <div id="userlogin">
-            <p class="textos">Usuario: <input type="text" id="usuario" name="usuario"></p>
-            <p class="textos">Contraseña: <input type="password" id="password" name="password"></p>
+    <form action = "/login" method = "POST" id = "formlogin">
+    <div class="login-wrap">
+        <div class="login-html">
+            <input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">Entrar</label>
+            <input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab">Registrarme</label>
+            
+            <div class="login-form">
+                <div class="sign-in-htm">
+                    <br><br>
+                    <div class="group">
+                        <label for="user" class="label">Username</label>
+                        <input id="usuario" type="text" class="input" name="usuario">
+
+                        <!--<input type="text" id="usuario" name="usuario">-->
+                    </div>
+                    <br>
+
+                    <div class="group">
+                        <label for="pass" class="label">Contraseña</label>
+                        <input id="password" type="password" class="input" name="password">
+                    </div>
+
+                    <br>
+                    <div class="group">
+                        <input type="submit" class="button" value="Ingresar" onclick="login()">
+                    </div>
+                    <p id="validacion"></p> 
+                </div>
+
+
+                <div class="sign-up-htm">
+                    <br><br>
+                    <p class="textos"> Nos hace feliz que quieras hacer parte del equipo, por favor llena el formulario. </p>
+                    <button type="button" class="button" onclick="abrirFormulario()">Formulario</button>
+                </div>
+
+                </div>
+            </div>
         </div>
-        <p><input type="button" value="Ingresar" id='btnIngreso' onclick="login()">
-            <input type="button" value="Registrar" id='btnRegistro' onclick="window.open('/registro')">
-        </p>
-        <p id="validacion"></p>
     </div>
-    </form>
+</form>
 </body>
 </html>
