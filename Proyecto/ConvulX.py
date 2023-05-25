@@ -70,14 +70,34 @@ def login():
             if (usuario == datosUsuario[5] and password == datosUsuario[6]):
                 encontrado = True
 
-                crearGrafica()
-
                 directorio = os.path.dirname(__file__)
                 archivo = 'static/verificar.csv'
                 ruta = os.path.join(directorio,archivo)
 
                 with open(ruta, 'w') as f:
                     f.write(usuario+";"+password+"\n")
+
+                directorio_v = os.path.dirname(__file__)
+                archivo_v = 'static/verificar.csv'
+                ruta_v = os.path.join(directorio_v,archivo_v)
+
+                with open(ruta_v, 'r') as f:
+                    datos = f.readlines()
+                    for usuariov in datos:
+                        datosUsuariov = usuariov.replace("\n","").split(";")
+                        usuario = datosUsuariov[0]
+                        password = datosUsuariov[1]
+
+                directorio_d = os.path.dirname(__file__)
+                archivo_d = 'static/sueños.csv'
+                ruta_d = os.path.join(directorio_d,archivo_d)
+
+                with open(ruta_d,'r') as d:
+                    datos2 = d.readlines()
+                    for usuario2 in datos2:
+                        datosUsuario2 = usuario2.replace("\n","").split(";")
+                        if (usuario == datosUsuario2[0] and password == datosUsuario2[1]):
+                            crearGrafica()
 
                 return render_template('menu.html')
         if encontrado ==  False:
@@ -268,33 +288,55 @@ def contacto():
         directorio = os.path.dirname(__file__)
         archivo = 'static/contactos.csv'
         ruta = os.path.join(directorio,archivo)
-        
+
         with open(ruta,'a') as d:
             d.write(usuario+";"+password+";"+conta+";"+contaap+";"+parentesco+";"+telefono+"\n")
 
         return (render_template('usuario.html'))
 
-@app.route('/nueva_alarma', methods=['POST'])
-def alarma():
-    if request.method == "POST":
-        lunes = request.form['lunes']
-        martes = request.form['martes']
-        miercoles = request.form['miercoles']
-        jueves = request.form['jueves']
-        viernes = request.form['viernes']
-        sabado = request.form['sabado']
-        domingo = request.form['domingo']
-        name = request.form['nameInput']
-        nombre_a = request.form['nom']
+@app.route('/nueva_alarma', methods=['POST']) 
+def alarma(): 
+    directorio_v = os.path.dirname(__file__)
+    archivo_v = 'static/verificar.csv'
+    ruta_v = os.path.join(directorio_v,archivo_v)
 
-        directorio = os.path.dirname(__file__)
-        archivo = 'static/medicamentos.csv'
-        ruta = os.path.join(directorio,archivo)
+    with open(ruta_v, 'r') as f:
+        datos = f.readlines()
+        for usuariov in datos:
+            datosUsuariov = usuariov.replace("\n","").split(";")
+            usuario = datosUsuariov[0]
+            password = datosUsuariov[1]
 
-        with open(ruta, 'a') as f:
-            f.write(nombre_a+";"+name+";"+lunes+";"+martes+";"+miercoles+";"+jueves+";"+viernes+";"+sabado+";"+domingo+"\n")
-            # f.write(nombre_a+"\n")
-        return (render_template('medicamentos.html', lunes=lunes, nombre_a=nombre_a))
+    dias_seleccionados = [] 
+    dias = ['lunes', 'martes', 'miercoles', 'jueves', 'viernes', 'sabado', 'domingo'] 
+    for dia in dias: 
+        if dia in request.form: 
+            dias_seleccionados.append(dia.capitalize()) 
+ 
+    name = request.form['nameInput'] 
+    hora_i = request.form['hourInput']
+    minu_i = request.form['minuteInput']
+    hora_r = request.form['hour_Input']
+    minu_r = request.form['minute_Input']
+
+    if (hora_i == ""):
+        hora_i = "0"
+    if (minu_i == ""):
+        minu_i = "0"
+    if (hora_r == ""):
+        hora_r = "0"
+    if (minu_r == ""):
+        minu_r = "0"
+ 
+    directorio = os.path.dirname(__file__) 
+    archivo = 'static/medicamentos.csv' 
+    ruta = os.path.join(directorio, archivo) 
+ 
+    with open(ruta, 'a') as f: 
+        f.write(usuario + ";" + password + ";" + name + ";" + hora_i + ";" + minu_i + ";" + hora_r + ";" + minu_r + ";" + ";".join(dias_seleccionados) + "\n") 
+ 
+    return render_template('medicamentos.html', dias_seleccionados=dias_seleccionados, name=name)
+
 
 @app.route('/ciclo_sueño', methods=['POST'])
 def sueño():
@@ -363,7 +405,6 @@ def crearGrafica():
     ax.set_xlabel("Día de la semana")
     ax.set_ylabel("Cantidad de horas")
 
-    # Método para graficar #1
     directorio = os.path.dirname(__file__)
     archivo = 'static/grafica.png'
     ruta = os.path.join(directorio,archivo)
@@ -374,14 +415,17 @@ def crearGrafica():
 # @app.route('/calcular_freq', methods=['POST'])
 # def calcular():
 #     datos = []
+#     conta = []
 
 #     while True:
 #         value = arduino.readline().decode().strip() # Valor del sensor
 #         datos.append(value)
 #         time.sleep(0.1)
+#         return (render_template('frecuencia.html', datos=datos))
 
-#     return (render_template('frecuencia.html', datos=datos))
-
+@app.route('/cerrar_sesion', methods=['POST'])
+def cerrar():
+    return (render_template('login.html'))
 
 if __name__=="__main__":
     app.run(debug=True)
